@@ -1,7 +1,7 @@
 <h4>A Random Walk in Three Dimensions</h4>
 
 N steps comprised of randomly generated vector coordinates within a chosen bound.
-Maximum diameter of the vectorspace is computed through brute force. 
+Maximum diameter of the vectorspace is computed by brute force. 
 
 <i>- JudGe</i>
 
