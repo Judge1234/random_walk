@@ -9,31 +9,23 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 
-def gen_vectors(bound):
-    coordinates = []
-    for x in range(-bound, bound+1):
-        for y in range(-bound, bound+1):
-            for z in range(-bound, bound+1):
-                coordinates.append([x, y, z])
-    return np.array(coordinates)
+vector_generator = lambda bound: [np.array([random.randint(-bound, bound) for i in range(3)]), ((bound * 2) +1)**3]
+
+
+calc_dist = lambda p1, p2: math.sqrt(((p2[0]-p1[0])**2) + ((p2[1]-p1[1])**2) + ((p2[2]-p1[2])**2))
 
 
 def random_walk(*, steps, step_bound):
     walk = []
     x, y, z = (0, 0, 0)
     for _ in range(steps):
-        dx, dy, dz = random.choice(gen_vectors(step_bound))
-        x += dx; y += dy; z += dz
+        vg = vector_generator(step_bound)[0]
+        x += vg[0]
+        y += vg[1]
+        z += vg[2]
         walk.append([x, y, z])
     return np.array(walk)
     
-
-def calc_dist(p1, p2):
-    x1, y1, z1 = p1[0], p1[1], p1[2]
-    x2, y2, z2 = p2[0], p2[1], p2[2]
-    D = math.sqrt(((x2-x1)**2) + ((y2-y1)**2) + ((z2-z1)**2))
-    return D
-
 
 def brute_force_diameter(data_points):
     bank = []
@@ -47,10 +39,10 @@ def brute_force_diameter(data_points):
     return diameter
 
 
-steps = 150
-step_bound = 5
+steps = 25
+step_bound = 1
 walk = random_walk(steps=steps, step_bound=step_bound)
-coordinate_combinations = len(gen_vectors(step_bound))
+coordinate_combinations = vector_generator(step_bound)[1]
 total_distance = sum([calc_dist(walk[i], walk[i+1]) for i in range(len(walk)-1)])
 dia_coordinates = np.vstack(brute_force_diameter(walk)[1:])
 sf_distance = calc_dist(walk[0], walk[-1])
