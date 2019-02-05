@@ -16,13 +16,10 @@ calc_dist = lambda p1, p2: math.sqrt(((p2[0]-p1[0])**2) + ((p2[1]-p1[1])**2) + (
 
 
 def random_walk(*, steps, step_bound):
-    walk = []
-    x, y, z = (0, 0, 0)
+    x, y, z, walk = 0, 0, 0, []
     for _ in range(steps):
         vg = vector_generator(step_bound)[0]
-        x += vg[0]
-        y += vg[1]
-        z += vg[2]
+        x += vg[0]; y += vg[1]; z += vg[2]
         walk.append([x, y, z])
     return np.array(walk)
     
